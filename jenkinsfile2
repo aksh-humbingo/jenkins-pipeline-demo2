@@ -1,51 +1,29 @@
 pipeline {
     agent any
 
-    triggers {
-        githubPush() // This enables GitHub webhook-based trigger
-    }
-
-    environment {
-        // Define any environment variables here if needed
-        BUILD_ENV = 'dev'
-    }
-
     stages {
-        stage('Checkout') {
-            steps {
-                echo "Cloning repo..."
-                checkout scm
-            }
-        }
-
         stage('Build') {
             steps {
-                echo "Running build in environment: ${env.BUILD_ENV}"
-                // Example: sh 'npm install' or sh './gradlew build'
+                echo 'Building the project...'
             }
         }
 
         stage('Test') {
             steps {
-                echo "Running tests..."
-                // Example: sh 'npm test'
+                echo 'Running tests...'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo "Deploying application..."
-                // Example: sh './deploy.sh'
+                echo '🚀 Deployed to production!'
             }
         }
-    }
 
-    post {
-        success {
-            echo "Pipeline completed successfully."
-        }
-        failure {
-            echo "Pipeline failed!"
+        stage('Notify') {
+            steps {
+                echo '📣 Sending Slack notification...'
+            }
         }
     }
 }
